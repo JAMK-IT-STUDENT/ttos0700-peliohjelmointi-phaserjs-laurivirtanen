@@ -31,6 +31,10 @@
 
                 //  The platforms group contains the ground and the 2 ledges we can jump on
                 platforms = game.add.group();
+                
+                diamonds = game.add.group();
+                diamonds.enableBody = true;
+                
 
                 //  We will enable physics for any object that is created in this group
                 platforms.enableBody = true;
@@ -99,6 +103,7 @@
                 
                 //check if player overlaps star
                 game.physics.arcade.overlap(player, stars, collectStar, null, this);
+                game.physics.arcade.overlap(player, diamonds, collectDiamond, null, this);
                 
                 var hitPlatform = game.physics.arcade.collide(player,platforms);
                 //  Reset the players velocity (movement)
@@ -141,9 +146,16 @@
                 scoreText.text = 'Score: ' + score;
                 playerSpeed = playerSpeed*1.1;
                 if(stars.countLiving() == 0){
-                    game.add.sprite(625,120,'diamond');
+                    var diamond = diamonds.create(game.world.width - 64, 64, 'diamond');
                     
                 }
+            }
+            
+            function collectDiamond(player, diamond){
+                console.log("terve end");
+                diamond.kill();
+                
+                
             }
             
         </script>
